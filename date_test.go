@@ -5,6 +5,10 @@ import (
 	"time"
 )
 
+var (
+	asiaLoc = time.FixedZone("Asia/Tokyo", 60*60*9)
+)
+
 func Test_newMatchDate(t *testing.T) {
 	// same year
 	type Spec struct {

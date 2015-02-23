@@ -45,7 +45,7 @@ func ICal(doc *goquery.Document, categories []string, channels []string, now tim
 				DTSTART: *program.StartAt,
 				DTEND:   program.StartAt.Add(time.Hour * 2),
 				SUMMARY: fmt.Sprintf("%v[%v][%v]%v", live, category, program.Channel, program.Match),
-				TZID:    "Asia/Tokyo",
+				TZID:    now.Location().String(),
 			}
 			components = append(components, component)
 		}

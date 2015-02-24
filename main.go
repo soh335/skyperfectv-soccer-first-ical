@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"os"
 	"regexp"
@@ -12,6 +11,7 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/codegangsta/cli"
+	"github.com/sirupsen/logrus"
 )
 
 const url = "http://soccer.skyperfectv.co.jp/static/first/"
@@ -71,7 +71,7 @@ func CategoriesAction(c *cli.Context) {
 		return nil
 	}
 	if err := f(c); err != nil {
-		log.Fatal(err)
+		logrus.Fatal(err)
 	}
 }
 
@@ -122,7 +122,7 @@ func ICalAction(c *cli.Context) {
 		return cal.Encode(os.Stdout)
 	}
 	if err := f(c); err != nil {
-		log.Fatal(err)
+		logrus.Fatal(err)
 	}
 }
 

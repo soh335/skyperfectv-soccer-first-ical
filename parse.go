@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"strings"
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/sirupsen/logrus"
 )
 
 func _parseCategories(doc *goquery.Document) []string {
@@ -31,14 +31,14 @@ func _parseProgramsForCategory(doc *goquery.Document, category string, now time.
 		match := strings.TrimSpace(s.Find(`td.match ul li`).Text())
 		matchDate, err := _newMatchDate(strings.TrimSpace(s.Find(`td.match span.date`).Text()), &now)
 		if err != nil {
-			log.Println("_newMatchDate err:", err)
+			logrus.Debug("_newMatchDate err:", err)
 			return
 		}
 		s.Find("td.channel").Each(func(i int, s *goquery.Selection) {
 			live := s.Find(`span.date img[alt="LIVE"]`).Size() == 1
 			date, err := _newDateWithBaseDate(strings.TrimSpace(s.Find(`span.date`).Text()), live, matchDate)
 			if err != nil {
-				log.Println("_newDateWithBaseDate err:", err)
+				logrus.Debug("_newDateWithBaseDate err:", err)
 				return
 			}
 			channel := strings.TrimSpace(s.Find(`div.cs_nambar`).Text())

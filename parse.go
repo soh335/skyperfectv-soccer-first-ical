@@ -36,7 +36,7 @@ func _parseProgramsForCategory(doc *goquery.Document, category string, now time.
 		}
 		s.Find("td.channel").Each(func(i int, s *goquery.Selection) {
 			live := s.Find(`span.date img[alt="LIVE"]`).Size() == 1
-			date, err := _newDateWithBaseDate(strings.TrimSpace(s.Find(`span.date`).Text()), live, matchDate)
+			date, err := _newProgramStartDate(strings.TrimSpace(s.Find(`span.date`).Text()), live, matchDate)
 			if err != nil {
 				logrus.Debug("_newDateWithBaseDate err:", err)
 				return

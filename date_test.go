@@ -113,7 +113,7 @@ func Test_newDateWithBaseDate(t *testing.T) {
 	}
 
 	for _, spec := range specs {
-		d, err := _newDateWithBaseDate(spec.date, spec.live, &spec.baseDate)
+		d, err := _newProgramStartDate(spec.date, spec.live, &spec.baseDate)
 		if err != nil {
 			t.Errorf("got err: %v spec.date:%v spec.live:%v", err, spec.date, spec.live)
 		}

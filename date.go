@@ -53,7 +53,7 @@ func _newMatchDate(matchDate string, baseDate *time.Time) (*time.Time, error) {
 	return &d, nil
 }
 
-func _newDateWithBaseDate(date string, live bool, baseDate *time.Time) (*time.Time, error) {
+func _newProgramStartDate(date string, live bool, baseDate *time.Time) (*time.Time, error) {
 	dateRegexp := regexp.MustCompile(`(.)(\d{1,2}):(\d{1,2})`)
 
 	m := dateRegexp.FindAllStringSubmatch(date, -1)

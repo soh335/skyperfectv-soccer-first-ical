@@ -11,11 +11,15 @@ import (
 	"github.com/soh335/ical"
 )
 
-func ICal(doc *goquery.Document, categories []string, channels []string, now time.Time, calname string, liveonly bool) (*ical.VCalendar, error) {
+func ICal(doc *goquery.Document, categories []string, channels []string, now time.Time, calname string, liveonly bool, channelClass bool) (*ical.VCalendar, error) {
 	programs_map := map[string][]Program{}
+	channelSelect := "#" // id
+	if channelClass {
+		channelSelect = "."
+	}
 	for _, category := range categories {
 		programs := []Program{}
-		_programs := _parseProgramsForCategory(doc, category, now)
+		_programs := _parseProgramsForCategory(doc, category, now, channelSelect)
 		for _, program := range _programs {
 			if !_inslice(program.Channel, channels) {
 				continue

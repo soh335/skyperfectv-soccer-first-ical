@@ -14,11 +14,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-const url = "http://soccer.skyperfectv.co.jp/static/first/"
-
 func main() {
 	app := cli.NewApp()
 	app.Usage = "generate ical of soccer.skyperfectv.co.jp/static/first"
+	app.Flags = []cli.Flag{
+		cli.StringFlag{
+			Name:  "url",
+			Value: "http://soccer.skyperfectv.co.jp/static/first/",
+		},
+	}
 	app.Commands = []cli.Command{
 		{
 			Name:   "category",
@@ -46,6 +50,9 @@ func main() {
 				cli.BoolFlag{
 					Name: "liveonly",
 				},
+				cli.BoolFlag{
+					Name: "channel-class",
+				},
 			},
 		},
 	}
@@ -54,7 +61,7 @@ func main() {
 
 func CategoriesAction(c *cli.Context) {
 	f := func(c *cli.Context) error {
-		r, err := _fetch()
+		r, err := _fetch(c.GlobalString("url"))
 		if err != nil {
 			return err
 		}
@@ -104,7 +111,7 @@ func ICalAction(c *cli.Context) {
 			channels[i] = strings.TrimSpace(channel)
 		}
 
-		r, err := _fetch()
+		r, err := _fetch(c.GlobalString("url"))
 		if err != nil {
 			return err
 		}
@@ -115,7 +122,7 @@ func ICalAction(c *cli.Context) {
 			return err
 		}
 
-		cal, err := ICal(doc, categories, channels, now, c.String("calname"), c.Bool("liveonly"))
+		cal, err := ICal(doc, categories, channels, now, c.String("calname"), c.Bool("liveonly"), c.Bool("channel-class"))
 		if err != nil {
 			return err
 		}
@@ -135,7 +142,7 @@ func _inslice(s string, strs []string) bool {
 	return false
 }
 
-func _fetch() (io.ReadCloser, error) {
+func _fetch(url string) (io.ReadCloser, error) {
 	res, err := http.Get(url)
 	if err != nil {
 		return nil, err

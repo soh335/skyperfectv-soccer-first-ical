@@ -8,7 +8,7 @@ import (
 )
 
 func _newMatchDate(matchDate string, baseDate *time.Time) (*time.Time, error) {
-	matchDateRegexp := regexp.MustCompile(`(\d{1,2})/(\d{1,2})\s?\(.\)(.)(\d{1,2}):(\d{1,2}) KO`)
+	matchDateRegexp := regexp.MustCompile(`(\d{1,2})/(\d{1,2})\s?\(.\)\s?(.)(\d{1,2}):(\d{1,2}).+KO`)
 
 	m := matchDateRegexp.FindAllStringSubmatch(matchDate, -1)
 

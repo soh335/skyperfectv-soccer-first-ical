@@ -41,11 +41,12 @@ func _parseProgramsForCategory(doc *goquery.Document, category string, now time.
 				logrus.Debug("_newDateWithBaseDate err:", err)
 				return
 			}
-			channel := strings.TrimSpace(s.Find(`div.cs_nambar`).Text())
+			channel := s.Find(`div.cs_nambar`)
+			channel.Children().RemoveFiltered("span.channelName")
 			p := Program{
 				StartAt: date,
 				Match:   match,
-				Channel: channel,
+				Channel: strings.TrimSpace(channel.Text()),
 				Live:    live,
 			}
 			programs = append(programs, p)

@@ -13,7 +13,7 @@ func _newMatchDate(matchDate string, baseDate *time.Time) (*time.Time, error) {
 	m := matchDateRegexp.FindAllStringSubmatch(matchDate, -1)
 
 	if len(m) == 0 {
-		return nil, fmt.Errorf("match failed: %v", matchDate)
+		return nil, fmt.Errorf("match match date regexp failed: %v", matchDate)
 	}
 	month, err := strconv.Atoi(m[0][1])
 	if err != nil {
@@ -59,7 +59,7 @@ func _newProgramStartDate(date string, live bool, baseDate *time.Time) (*time.Ti
 	m := dateRegexp.FindAllStringSubmatch(date, -1)
 
 	if len(m) == 0 {
-		return nil, fmt.Errorf("match failed: %v", date)
+		return nil, fmt.Errorf("match start date failed: %v", date)
 	}
 
 	hour, err := strconv.Atoi(m[0][2])

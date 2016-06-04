@@ -31,14 +31,14 @@ func _parseProgramsForCategory(doc *goquery.Document, category string, now time.
 		match := strings.TrimSpace(s.Find(`td.match ul li`).Text())
 		matchDate, err := _newMatchDate(strings.TrimSpace(s.Find(`td.match span.date`).Text()), &now)
 		if err != nil {
-			logrus.Debug("_newMatchDate err:", err)
+			logrus.Debug("_newMatchDate err:", err, s.Text())
 			return
 		}
 		s.Find("td.channel").Each(func(i int, s *goquery.Selection) {
 			live := s.Find(`span.date img[alt="LIVE"]`).Size() == 1
 			date, err := _newProgramStartDate(strings.TrimSpace(s.Find(`span.date`).Text()), live, matchDate)
 			if err != nil {
-				logrus.Debug("_newDateWithBaseDate err:", err)
+				logrus.Debug("_newDateWithBaseDate err:", err, s.Text())
 				return
 			}
 			channel := s.Find(`div.cs_nambar`)

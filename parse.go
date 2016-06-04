@@ -27,7 +27,7 @@ func _parseCategories(doc *goquery.Document) []string {
 func _parseProgramsForCategory(doc *goquery.Document, category string, now time.Time, channelSelect string) []Program {
 	programs := []Program{}
 
-	doc.Find(fmt.Sprintf(`div%s%s tbody tr:not([class="foot"])`, channelSelect, category)).Each(func(i int, s *goquery.Selection) {
+	doc.Find(fmt.Sprintf(`table%s%s tbody tr:not([class="foot"])`, channelSelect, category)).Each(func(i int, s *goquery.Selection) {
 		match := strings.TrimSpace(s.Find(`td.match ul li`).Text())
 		matchDate, err := _newMatchDate(strings.TrimSpace(s.Find(`td.match span.date`).Text()), &now)
 		if err != nil {

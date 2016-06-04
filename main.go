@@ -50,9 +50,6 @@ func main() {
 				cli.BoolFlag{
 					Name: "liveonly",
 				},
-				cli.BoolFlag{
-					Name: "channel-class",
-				},
 			},
 		},
 	}
@@ -122,7 +119,7 @@ func ICalAction(c *cli.Context) {
 			return err
 		}
 
-		cal, err := ICal(doc, categories, channels, now, c.String("calname"), c.Bool("liveonly"), c.Bool("channel-class"))
+		cal, err := ICal(doc, categories, channels, now, c.String("calname"), c.Bool("liveonly"))
 		if err != nil {
 			return err
 		}
